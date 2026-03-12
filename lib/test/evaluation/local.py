@@ -3,33 +3,36 @@ from lib.test.evaluation.environment import EnvSettings
 def local_env_settings():
     settings = EnvSettings()
 
-    # Set your local paths here.
+    # Set Kaggle working paths here.
+    settings.prj_dir = '/kaggle/working/SUTrack'
+    settings.result_plot_path = '/kaggle/working/SUTrack/test/result_plots'
+    settings.results_path = '/kaggle/working/SUTrack/test/tracking_results'    # Where to store tracking results
+    settings.save_dir = '/kaggle/input/datasets/potatoguy44/teacher/sutrack_l384'    # Root path for model weights
+    settings.network_path = '/kaggle/working/SUTrack/test/networks'    # Where tracking networks are stored.
+    settings.segmentation_path = '/kaggle/working/SUTrack/test/segmentation_results'
 
+    # Kaggle Dataset paths (Adjust the dataset names mapped in /kaggle/input/)
+    settings.uav_path = '/kaggle/input/datasets/hanaramah/uav123-20l-dataset/UAV123'
+    
+    # Optional datasets left blank
     settings.davis_dir = ''
-    settings.got10k_lmdb_path = '/home/cx/cx1/github-repo/SUTrack/data/got10k_lmdb'
-    settings.got10k_path = '/home/cx/cx1/github-repo/SUTrack/data/got10k'
+    settings.got10k_lmdb_path = ''
+    settings.got10k_path = ''
     settings.got_packed_results_path = ''
     settings.got_reports_path = ''
-    settings.lasot_extension_subset_path = '/home/cx/cx1/github-repo/SUTrack/data/lasot_extension_subset'
-    settings.lasot_lmdb_path = '/home/cx/cx1/github-repo/SUTrack/data/lasot_lmdb'
-    settings.lasot_path = '/home/cx/cx1/github-repo/SUTrack/data/lasot'
-    settings.lasotlang_path = '/home/cx/cx1/github-repo/SUTrack/data/lasot'
-    settings.network_path = '/home/cx/cx1/github-repo/SUTrack/test/networks'    # Where tracking networks are stored.
-    settings.nfs_path = '/home/cx/cx1/github-repo/SUTrack/data/nfs'
-    settings.otb_path = '/home/cx/cx1/github-repo/SUTrack/data/OTB2015'
-    settings.otblang_path = '/home/cx/cx1/github-repo/SUTrack/data/otb_lang'
-    settings.prj_dir = '/home/cx/cx1/github-repo/SUTrack'
-    settings.result_plot_path = '/home/cx/cx1/github-repo/SUTrack/test/result_plots'
-    settings.results_path = '/home/cx/cx1/github-repo/SUTrack/test/tracking_results'    # Where to store tracking results
-    settings.save_dir = '/home/cx/cx1/github-repo/SUTrack'
-    settings.segmentation_path = '/home/cx/cx1/github-repo/SUTrack/test/segmentation_results'
-    settings.tc128_path = '/home/cx/cx1/github-repo/SUTrack/data/TC128'
+    settings.lasot_extension_subset_path = ''
+    settings.lasot_lmdb_path = ''
+    settings.lasot_path = ''
+    settings.lasotlang_path = ''
+    settings.nfs_path = ''
+    settings.otb_path = ''
+    settings.otblang_path = ''
+    settings.tc128_path = ''
     settings.tn_packed_results_path = ''
-    settings.tnl2k_path = '/home/cx/cx1/github-repo/SUTrack/data/tnl2k/test'
+    settings.tnl2k_path = ''
     settings.tpl_path = ''
-    settings.trackingnet_path = '/home/cx/cx1/github-repo/SUTrack/data/trackingnet'
-    settings.uav_path = '/home/cx/cx1/github-repo/SUTrack/data/UAV123'
-    settings.vot_path = '/home/cx/cx1/github-repo/SUTrack/data/VOT2019'
+    settings.trackingnet_path = ''
+    settings.vot_path = ''
     settings.youtubevos_dir = ''
 
     return settings

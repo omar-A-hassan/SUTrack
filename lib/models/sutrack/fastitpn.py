@@ -1174,6 +1174,9 @@ def fastitpnl(pretrained=False, pos_type="interpolate", pretrain_type="", patche
         **kwargs)
     model.default_cfg = _cfg()
     if pretrained:
-        checkpoint = torch.load(pretrain_type, map_location="cpu")
-        load_pretrained(model,checkpoint,pos_type,patchembed_init)
+        try:
+            checkpoint = torch.load(pretrain_type, map_location="cpu")
+            load_pretrained(model,checkpoint,pos_type,patchembed_init)
+        except FileNotFoundError:
+            print(f"Warning: Pretrained backbone weights not found at {pretrain_type}. Skipping initialization.")
     return model

@@ -17,14 +17,15 @@ class SUTRACK(BaseTracker):
         network = build_sutrack(params.cfg)
         network.load_state_dict(torch.load(self.params.checkpoint, map_location='cpu')['net'], strict=True)
         self.cfg = params.cfg
-        self.network = network.cuda()
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.network = network.to(self.device)
         self.network.eval()
         self.preprocessor = Preprocessor()
         self.state = None
 
         self.fx_sz = self.cfg.TEST.SEARCH_SIZE // self.cfg.MODEL.ENCODER.STRIDE
         if self.cfg.TEST.WINDOW == True: # for window penalty
-            self.output_window = hann2d(torch.tensor([self.fx_sz, self.fx_sz]).long(), centered=True).cuda()
+            self.output_window = hann2d(torch.tensor([self.fx_sz, self.fx_sz]).long(), centered=True).to(self.device)
 
         self.num_template = self.cfg.TEST.NUM_TEMPLATES
 
@@ -94,7 +95,7 @@ class SUTRACK(BaseTracker):
                                                 resize_factor,
                                                 torch.Tensor([self.params.template_size, self.params.template_size]),
                                                 normalize=True)
-        self.template_anno_list = [prev_box_crop.to(template.device).unsqueeze(0)]
+        self.template_anno_list = [prev_box_crop.float().to(template.device).unsqueeze(0)]
         self.frame_id = 0
 
         # language information
@@ -170,7 +171,7 @@ class SUTRACK(BaseTracker):
                                                         torch.Tensor(
                                                             [self.params.template_size, self.params.template_size]),
                                                         normalize=True)
-                self.template_anno_list.append(prev_box_crop.to(template.device).unsqueeze(0))
+                self.template_anno_list.append(prev_box_crop.float().to(template.device).unsqueeze(0))
                 if len(self.template_anno_list) > self.num_template:
                     self.template_anno_list.pop(1)
 

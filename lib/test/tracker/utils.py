@@ -8,10 +8,11 @@ from lib.utils.misc import NestedTensor
 
 class Preprocessor(object):
     def __init__(self):
-        self.mean = torch.tensor([0.485, 0.456, 0.406]).view((1, 3, 1, 1)).cuda()
-        self.std = torch.tensor([0.229, 0.224, 0.225]).view((1, 3, 1, 1)).cuda()
-        self.mm_mean = torch.tensor([0.485, 0.456, 0.406, 0.485, 0.456, 0.406]).view((1, 6, 1, 1)).cuda()
-        self.mm_std = torch.tensor([0.229, 0.224, 0.225, 0.229, 0.224, 0.225]).view((1, 6, 1, 1)).cuda()
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.mean = torch.tensor([0.485, 0.456, 0.406]).view((1, 3, 1, 1)).to(self.device)
+        self.std = torch.tensor([0.229, 0.224, 0.225]).view((1, 3, 1, 1)).to(self.device)
+        self.mm_mean = torch.tensor([0.485, 0.456, 0.406, 0.485, 0.456, 0.406]).view((1, 6, 1, 1)).to(self.device)
+        self.mm_std = torch.tensor([0.229, 0.224, 0.225, 0.229, 0.224, 0.225]).view((1, 6, 1, 1)).to(self.device)
 
     def process(self, img_arr: np.ndarray):
         if img_arr.shape[-1] == 6:
@@ -21,7 +22,7 @@ class Preprocessor(object):
             mean = self.mean
             std = self.std
         # Deal with the image patch
-        img_tensor = torch.tensor(img_arr).cuda().float().permute((2,0,1)).unsqueeze(dim=0)
+        img_tensor = torch.tensor(img_arr).to(self.device).float().permute((2,0,1)).unsqueeze(dim=0)
         # img_tensor = torch.tensor(img_arr).float().permute((2,0,1)).unsqueeze(dim=0)
         img_tensor_norm = ((img_tensor / 255.0) - mean) / std  # (1,3,H,W)
         return img_tensor_norm
